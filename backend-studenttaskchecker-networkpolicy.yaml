@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  namespace: stc
+  creationTimestamp: null
+  name: backend-studenttaskchecker
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              backend-studenttaskchecker: "true"
+  podSelector:
+    matchLabels:
+      backend-studenttaskchecker: "true"

@@ -1,0 +1,33 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: filemanagement-service
+  namespace: stc
+  labels:
+    type: local
+    app: filemanagement-service
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/path/to/initdb/sql/scripts"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: stc
+  name: filemanagement-service-claim
+  creationTimestamp: null
+  labels:
+    app: filemanagement-service-claim
+  name: filemanagement-service-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}

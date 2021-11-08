@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stc
+  creationTimestamp: null
+  labels:
+    app: discovery-service-peer1
+  name: discovery-service-peer1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discovery-service-peer1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        backend-studenttaskchecker: "true"
+        app: discovery-service-peer1
+    spec:
+      containers:
+        - image: discovery-service-peer1:latest
+          name: discovery-service-peer1
+          ports:
+            - containerPort: 8761
+          resources: {}
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+status: {}

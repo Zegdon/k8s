@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stc
+  creationTimestamp: null
+  labels:
+    app: mysql-database
+  name: mysql-database
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stc
+  creationTimestamp: null
+  labels:
+    app: mysql-database
+  name: mysql-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        backend-studenttaskchecker: "true"
+        app: mysql-database
+    spec:
+      containers:
+        - args:
+            - mysqld
+            - --character-set-server=utf8mb4
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_HOST
+              value: localhost
+          image: mysql:5.7
+          name: mysql-database
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: mysql-initdb-pv-volume
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      volumes:
+        - name: mysql-initdb-pv-volume
+          configMap:
+            name: initdb

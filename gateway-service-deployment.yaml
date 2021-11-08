@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: stc
+  creationTimestamp: null
+  labels:
+    app: gateway-service
+  name: gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-service
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        backend-studenttaskchecker: "true"
+        app: gateway-service
+    spec:
+      containers:
+        - image: gateway-service:latest
+          name: gateway-service
+          resources: {}
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+status: {}
